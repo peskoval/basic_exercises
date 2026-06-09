@@ -5,6 +5,9 @@
 # Маша: 2
 # Петя: 2
 
+from collections import Counter
+
+
 students = [
     {'first_name': 'Вася'},
     {'first_name': 'Петя'},
@@ -12,13 +15,26 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Петя'},
 ]
-# ???
+
+student_list = []
+for iter in students:
+    student_list.append(*iter.values())
+names_counter = Counter(student_list)
+
+for name, count in names_counter.items():
+    print(f"{name}: {count}")
+
+print(20 * '-')
 
 
+# Вывод:
+# apple: 3
+# banana: 1
 # Задание 2
 # Дан список учеников, нужно вывести самое часто повторящееся имя
 # Пример вывода:
 # Самое частое имя среди учеников: Маша
+
 students = [
     {'first_name': 'Вася'},
     {'first_name': 'Петя'},
@@ -26,8 +42,12 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Оля'},
 ]
-# ???
+student_list = []
+for iter in students:
+    student_list.append(*iter.values())
+print(Counter(student_list).most_common()[0][0])
 
+print(20 * '-')
 
 # Задание 3
 # Есть список учеников в нескольких классах, нужно вывести самое частое имя в каждом классе.
@@ -51,8 +71,13 @@ school_students = [
         {'first_name': 'Саша'},
     ],
 ]
-# ???
+for class_data in school_students:
+    student_list = []
+    for data in class_data:
+        student_list.append(*data.values())
+    print(Counter(student_list).most_common()[0][0])
 
+print(20 * '-')
 
 # Задание 4
 # Для каждого класса нужно вывести количество девочек и мальчиков в нём.
@@ -72,8 +97,17 @@ is_male = {
     'Миша': True,
     'Даша': False,
 }
-# ???
 
+for class_data in school:
+    students_name = []
+    students_list = class_data['students']
+    for data in students_list:
+        students_name.append(*data.values())
+
+    counts = Counter(is_male[name] for name in students_name)
+    print(f'Класс {class_data['class']}: девочки {counts[False]}, мальчики {counts[True]}')
+
+print(20 * '-')
 
 # Задание 5
 # По информации о учениках разных классов нужно найти класс, в котором больше всего девочек и больше всего мальчиков
@@ -91,5 +125,12 @@ is_male = {
     'Олег': True,
     'Миша': True,
 }
-# ???
 
+for class_data in school:
+    students_name = []
+    students_list = class_data['students']
+    for data in students_list:
+        students_name.append(*data.values())
+
+    counts = Counter(is_male[name] for name in students_name)
+    print(f'Больше всего {"девочек" if (counts[False] > counts[True]) else "мальчиков"} в классе {class_data['class']}')
